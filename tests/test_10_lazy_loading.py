@@ -36,7 +36,7 @@ def test_lazy_loading():
         os.environ["OPENAI_API_KEY"] = "sk-mock-key-for-testing"
         from langchain_core.embeddings import FakeEmbeddings
         from longtrainer.trainer import LongTrainer
-        from longtrainer.bot import RAGBot, AgentBot
+        from longtrainer.bot import RAGBot
         from longtrainer.vision_bot import VisionMemory
 
         trainer = LongTrainer(
@@ -125,7 +125,7 @@ def test_lazy_loading():
         assert chat_data and len(chat_data) == 3, f"Expected 3 chat records, got {len(chat_data) if chat_data else 0}"
         assert vision_data and len(vision_data) == 2, f"Expected 2 vision records, got {len(vision_data) if vision_data else 0}"
 
-        results.append(("Store test history in MongoDB", True, f"3 chats + 2 vision chats stored"))
+        results.append(("Store test history in MongoDB", True, "3 chats + 2 vision chats stored"))
     except Exception as e:
         results.append(("Store test history in MongoDB", False, str(e)))
 
@@ -232,8 +232,8 @@ def test_lazy_loading():
         chats = trainer.list_chats(bot_id)
         assert "chat_ids" in chats, "list_chats should return chat_ids"
         assert "vision_chat_ids" in chats, "list_chats should return vision_chat_ids"
-        assert test_chat_id in chats["chat_ids"], f"test_chat_id should be in chat_ids"
-        assert test_vision_chat_id in chats["vision_chat_ids"], f"test_vision_chat_id should be in vision_chat_ids"
+        assert test_chat_id in chats["chat_ids"], "test_chat_id should be in chat_ids"
+        assert test_vision_chat_id in chats["vision_chat_ids"], "test_vision_chat_id should be in vision_chat_ids"
 
         results.append(("list_chats — MongoDB query", True, f"{len(chats['chat_ids'])} chats, {len(chats['vision_chat_ids'])} vision"))
     except Exception as e:

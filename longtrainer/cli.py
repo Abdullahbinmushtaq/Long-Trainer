@@ -140,9 +140,9 @@ def init(
         yaml.dump(config, f, default_flow_style=False, sort_keys=False)
 
     click.secho(f"\n✅ Config written to {output}", fg="green", bold=True)
-    click.echo(f"\nNext steps:")
+    click.echo("\nNext steps:")
     click.echo(f"  1. Review and edit {output}")
-    click.echo(f"  2. Run: longtrainer serve\n")
+    click.echo("  2. Run: longtrainer serve\n")
 
 
 # ─── serve ────────────────────────────────────────────────────────────────────
@@ -261,11 +261,11 @@ def bot_create(config: str, prompt: str | None, agent: bool, tools: str | None) 
         agent_mode=agent,
         tools=tool_list if tool_list else None
     )
-    click.secho(f"\n✅ Bot created successfully!", fg="green", bold=True)
+    click.secho("\n✅ Bot created successfully!", fg="green", bold=True)
     click.echo(f"   Bot ID    : {bot_id}")
     click.echo(f"   Agent Mode: {'Yes' if agent else 'No (RAG)'}")
     click.echo(f"   Tools     : {', '.join(tool_list) if tool_list else 'none'}")
-    click.echo(f"\nNext steps:")
+    click.echo("\nNext steps:")
     click.echo(f"  longtrainer add-doc {bot_id} <file.pdf>")
     click.echo(f"  longtrainer chat {bot_id}\n")
 
@@ -360,10 +360,10 @@ def chat_command(bot_id: str, config: str) -> None:
 
     chat_id = trainer.new_chat(bot_id)
 
-    click.secho(f"\n💬 LongTrainer Chat", fg="cyan", bold=True)
+    click.secho("\n💬 LongTrainer Chat", fg="cyan", bold=True)
     click.echo(f"   Bot    : {bot_id}")
     click.echo(f"   Chat ID: {chat_id}")
-    click.echo(f"\nType 'exit' or 'quit' to end the session.\n")
+    click.echo("\nType 'exit' or 'quit' to end the session.\n")
 
     while True:
         try:
@@ -376,7 +376,7 @@ def chat_command(bot_id: str, config: str) -> None:
                 try:
                     result = trainer.get_response(query, bot_id, chat_id)
                     response = result[0] if isinstance(result, tuple) else str(result)
-                    click.secho(f"\nLongTrainer> ", fg="blue", bold=True, nl=False)
+                    click.secho("\nLongTrainer> ", fg="blue", bold=True, nl=False)
                     click.echo(response)
                     click.echo()
                     break

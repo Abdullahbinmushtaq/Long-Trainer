@@ -12,7 +12,7 @@ def test_tool_registry():
     print("TEST 3: Tool Registry & Built-in Tools")
     print("=" * 60)
 
-    from langchain_core.tools import tool, BaseTool
+    from langchain_core.tools import tool
     from longtrainer.tools import ToolRegistry, web_search, document_reader, get_builtin_tools
 
     results = []
