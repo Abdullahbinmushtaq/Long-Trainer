@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] — In development
+
+### 🧪 Testing & CI
+
+- Collect the full `tests/` suite on Python 3.10, 3.11, and 3.12, including rate-limiter tests and 17 relocated bug-fix regressions.
+- Make legacy script checks and lazy-loading integration setup failures fail pytest; reject tests returning non-`None` values.
+- Add 16 offline lazy-loading cases, two failure-signaling regressions, and a separate MongoDB/in-memory Qdrant CI job with an `integration` dependency extra.
+- Replace flake8 with bounded Ruff checks and record lint deferrals and verification results in `docs/phase_a_ci_integrity.md`.
+- Temporarily skip the orphaned structured-output test module until Phase B provides `longtrainer.structured`; retain its existing tests.
+- Declare the community tool loader's `mypy-extensions` runtime dependency and prepare document-parser assets before offline CI tests.
+
 ## [1.3.1] — 2026-05-07
 
 ### ✨ New Features
