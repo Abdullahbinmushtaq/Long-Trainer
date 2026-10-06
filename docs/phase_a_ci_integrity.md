@@ -30,7 +30,7 @@ Install the development dependencies and parser asset in an activated Python env
 
 ```bash
 python -m pip install -e '.[agent,dev,cli,api]'
-python -m spacy download en_core_web_sm
+python -m pip install 'spacy>=3.8,<3.9' 'https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl'
 ruff check .
 pytest tests/ -v -ra
 ```
@@ -89,3 +89,13 @@ Two exceptions are intentional rather than deferred cleanup: `F401` in the impor
 ## Phase B follow-up
 
 Phase B resolves CI-B-01: `longtrainer.structured` now exists, the module skip and `bot.py` E731 exception are removed, and all 17 preserved functions collect. See [Phase B verification](phase_b_structured_output.md). The counts above remain the historical Phase A results.
+
+## Remote CI parser setup follow-up — 6 October 2026
+
+[PR 26's Python 3.10 job](https://github.com/ENDEVSOLS/Long-Trainer/actions/runs/37417949931/job/112120710490) failed in `Prepare document parser assets`, before its tests ran. The public job metadata confirms the failing step; the full log requires authenticated access. Python 3.11/3.12 were cancelled by the matrix fail-fast behavior; lint and MongoDB integration passed.
+
+The corresponding local Python 3.10 development environment reproduced `python -m spacy download en_core_web_sm` failing with `No module named spacy`. Its resolved Unstructured 0.18.32 dependencies do not include spaCy; the English model 3.8.0 wheel also declares no dependencies. The previous CI command therefore relied on a transitive dependency that is absent in this resolution.
+
+The workflow now explicitly installs `spacy>=3.8,<3.9` and the matching `en_core_web_sm` 3.8.0 wheel, then calls `spacy.load('en_core_web_sm')` to validate preparation. Matrix fail-fast is disabled so one failure cannot cancel the other Python results. README/current setup instructions match this change. The workflow fix is local until committed and pushed; remote confirmation remains pending.
+
+Follow-up local verification: explicit installation selected spaCy 3.8.16; `spacy.load("en_core_web_sm")` passed on Python 3.10, 3.11 and 3.12. The post-install Python 3.10 suite passed **141 tests, 1 integration skip**, 11 existing deprecation warnings in 30.34s. Workflow YAML checks, Ruff and `git diff --check` passed. No commit or push was performed.

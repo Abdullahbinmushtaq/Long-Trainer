@@ -456,7 +456,7 @@ From the checkout, install test dependencies and the document parser asset:
 
 ```bash
 pip install -e '.[agent,dev,cli,api,integration]'
-python -m spacy download en_core_web_sm
+python -m pip install 'spacy>=3.8,<3.9' 'https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl'
 pytest tests/ -v -ra
 ruff check .
 ```

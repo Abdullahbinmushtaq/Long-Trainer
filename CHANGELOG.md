@@ -23,6 +23,8 @@ Version metadata aligned to `1.4.0` on 6 October 2026. Release date, tag and pub
 
 ### 🧪 Testing & CI
 
+- Install the parser model explicitly in CI so Python 3.10 does not rely on a transitive spaCy dependency; keep all Python matrix jobs running when one fails.
+
 - Collect the full `tests/` suite on Python 3.10, 3.11, and 3.12, including rate-limiter tests and 17 relocated bug-fix regressions.
 - Make legacy script checks and lazy-loading integration setup failures fail pytest; reject tests returning non-`None` values.
 - Add 16 offline lazy-loading cases, two failure-signaling regressions, and a separate MongoDB/in-memory Qdrant CI job with an `integration` dependency extra.
