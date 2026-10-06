@@ -1,20 +1,10 @@
 """Tests for P3-1 Structured Output, P3-2 GET /bots/{bot_id},
 P3-3 Config Lock Guard, and P3-6 Vision Normalizer."""
 
-import importlib.util
 import json
 
 import pytest
 from unittest.mock import MagicMock
-
-# Phase A exception: Phase B extracts this absent module from RAGBot.
-# Check only absence: errors inside an implemented module must still fail collection.
-if importlib.util.find_spec("longtrainer.structured") is None:
-    pytest.skip(
-        "Phase B (refactor/structured-output-module) must provide longtrainer.structured; "
-        "remove this temporary Phase A skip when the module lands.",
-        allow_module_level=True,
-    )
 
 from longtrainer.structured import (
     StructuredResponse,

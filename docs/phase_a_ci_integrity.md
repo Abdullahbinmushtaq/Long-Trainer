@@ -85,3 +85,7 @@ The following are local follow-up issue records, **not published GitHub issues**
 | CI-B-01 | Resolve the missing structured module and `bot.py`'s `E731` lambda. | Implement Phase B, remove the module skip and lambda exception, and collect all 17 structured/vision functions. |
 
 Two exceptions are intentional rather than deferred cleanup: `F401` in the import smoke tests (`test_01` and `test_04`), where successful import is the check; and `E402` in `api.py`, where environment loading deliberately precedes imports. Do not delete those checks or reorder application initialization solely to satisfy lint.
+
+## Phase B follow-up
+
+Phase B resolves CI-B-01: `longtrainer.structured` now exists, the module skip and `bot.py` E731 exception are removed, and all 17 preserved functions collect. See [Phase B verification](phase_b_structured_output.md). The counts above remain the historical Phase A results.

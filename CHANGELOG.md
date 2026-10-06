@@ -4,14 +4,37 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.0] — In development
 
+Version metadata aligned to `1.4.0` on 6 October 2026. Release date, tag and publication remain pending.
+
+### ✨ New Features
+
+- Add `research`, `coding`, `financial`, and `customer_support` purposes through `create_bot(..., agent_type=...)` and the exported `AgentTypeRegistry`.
+- Resolve purpose-specific tools lazily with dedicated `research`, `coding`, and `financial` extras; fail clearly when defaults are unavailable. SQL remains deferred pending safety/configuration review.
+- Persist and restore named configurations across loads and internal document/chat-training rebuilds. Explicit tool lists replace defaults and exclude implicit global tools.
+- Ground customer support in cited knowledge-base text, rejecting web/upload augmentation and vision responses; document overrides, persistence limits and in-process Python execution in `docs/docs/agent_types.md`.
+
+### 📖 Documentation & Interfaces
+
+- Remove the internal `testing-folder/LONGTRAINER_ROADMAP.md` from the repository; public configuration guidance remains in the named-agent guide.
+
+- Add optional `agent_type` to the existing HTTP build request; invalid names return HTTP 400 with supported names.
+- Add `longtrainer build [BOT_ID] --agent-type ...` and purpose selection on `bot create`, preserving existing CLI options and explicit empty tool overrides.
+- Register the named-agent guide, document infrastructure-only YAML and interface precedence, and consolidate duplicate migration navigation entries.
+
 ### 🧪 Testing & CI
 
 - Collect the full `tests/` suite on Python 3.10, 3.11, and 3.12, including rate-limiter tests and 17 relocated bug-fix regressions.
 - Make legacy script checks and lazy-loading integration setup failures fail pytest; reject tests returning non-`None` values.
 - Add 16 offline lazy-loading cases, two failure-signaling regressions, and a separate MongoDB/in-memory Qdrant CI job with an `integration` dependency extra.
 - Replace flake8 with bounded Ruff checks and record lint deferrals and verification results in `docs/phase_a_ci_integrity.md`.
-- Temporarily skip the orphaned structured-output test module until Phase B provides `longtrainer.structured`; retain its existing tests.
+- Restore all 17 structured-output/vision tests after Phase B removes the temporary module skip.
 - Declare the community tool loader's `mypy-extensions` runtime dependency and prepare document-parser assets before offline CI tests.
+
+### 🔧 Improvements
+
+- Extract reusable JSON-schema validation, deterministic schema hashing, concise error feedback, and one-retry response repair into `longtrainer.structured`.
+- Preserve structured chat dictionaries and successful-only history updates; copy retry messages, remove dead message construction and the temporary Ruff lambda exception, and honor invocation configuration on both attempts.
+- Add structured bot/chat/API boundary regressions; retain unused schema registry methods without adding persistence side effects.
 
 ## [1.3.1] — 2026-05-07
 
