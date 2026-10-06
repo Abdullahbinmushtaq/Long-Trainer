@@ -273,7 +273,7 @@ class AgentBot:
                 HumanMessage(content=query),
             ]
             result = self.agent.invoke({"messages": messages}, config=config)
-            answer = result["messages"][-1].content if result.get("messages") else ""
+            answer = StrOutputParser().invoke(result["messages"][-1]) if result.get("messages") else ""
             self.save_context(query, answer)
             return answer
         except Exception as e:
@@ -303,11 +303,13 @@ class AgentBot:
                 if hasattr(chunk, "__iter__") and len(chunk) == 2:
                     msg, meta = chunk
                     if hasattr(msg, "content") and msg.content:
-                        full_response += msg.content
-                        yield msg.content
+                        text = StrOutputParser().invoke(msg)
+                        full_response += text
+                        yield text
                 elif hasattr(chunk, "content") and chunk.content:
-                    full_response += chunk.content
-                    yield chunk.content
+                    text = StrOutputParser().invoke(chunk)
+                    full_response += text
+                    yield text
 
             self.save_context(query, full_response)
         except Exception as e:
@@ -336,11 +338,13 @@ class AgentBot:
                 if hasattr(chunk, "__iter__") and len(chunk) == 2:
                     msg, meta = chunk
                     if hasattr(msg, "content") and msg.content:
-                        full_response += msg.content
-                        yield msg.content
+                        text = StrOutputParser().invoke(msg)
+                        full_response += text
+                        yield text
                 elif hasattr(chunk, "content") and chunk.content:
-                    full_response += chunk.content
-                    yield chunk.content
+                    text = StrOutputParser().invoke(chunk)
+                    full_response += text
+                    yield text
 
             self.save_context(query, full_response)
         except Exception as e:

@@ -77,7 +77,8 @@ dependencies = [
 [project.optional-dependencies]
 cli = ["click>=8.0", "pyyaml>=6.0"]
 agent = ["langgraph>=0.3.10"]
-research = ["langgraph>=0.3.10", "tavily-python>=0.5", "arxiv>=2.1"]
+# The community ArxivAPIWrapper still calls Search.results, removed in arxiv 4.
+research = ["langgraph>=0.3.10", "tavily-python>=0.5", "arxiv>=2.1,<4"]
 coding = ["langgraph>=0.3.10", "tavily-python>=0.5", "langchain-experimental>=0.3.4"]
 financial = ["langgraph>=0.3.10", "yfinance>=0.2.54", "langchain-experimental>=0.3.4"]
 tracer = ["longtracer[langchain,langgraph,mongo]>=0.1.6"]

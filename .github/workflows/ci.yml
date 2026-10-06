@@ -47,7 +47,7 @@ jobs:
       - name: Install package
         run: |
           python -m pip install --upgrade pip
-          pip install .[agent,dev,cli,api]
+          pip install '.[agent,research,coding,financial,dev,cli,api]'
 
       - name: Prepare document parser assets
         # Some Python 3.10 dependency resolutions do not install spaCy.

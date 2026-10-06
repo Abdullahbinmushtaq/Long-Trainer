@@ -34,6 +34,11 @@ Version metadata aligned to `1.4.0` on 6 October 2026. Release date, tag and pub
 
 ### 🔧 Improvements
 
+- Bound the research extra to `arxiv>=2.1,<4` because the community wrapper still calls `Search.results`, removed in arxiv 4; exercise the actual wrapper in the Python CI matrix.
+- Identify Wikipedia requests with a project user agent so live lookups satisfy the service's request policy.
+- Fall back to Yahoo Finance's news-search headlines, including source links and publication timestamps, when ticker article lookup returns no news.
+- Parse provider text blocks into strings for structured and vision responses and agent invocation and synchronous/asynchronous streaming, including Gemini responses.
+
 - Extract reusable JSON-schema validation, deterministic schema hashing, concise error feedback, and one-retry response repair into `longtrainer.structured`.
 - Preserve structured chat dictionaries and successful-only history updates; copy retry messages, remove dead message construction and the temporary Ruff lambda exception, and honor invocation configuration on both attempts.
 - Add structured bot/chat/API boundary regressions; retain unused schema registry methods without adding persistence side effects.

@@ -7,6 +7,7 @@ from typing import Any, Literal, Optional
 
 import jsonschema
 from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.output_parsers import StrOutputParser
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -66,7 +67,7 @@ def get_structured_response(llm: Any, messages: list, schema: dict,
     try:
         for attempt in range(2):
             response = llm.invoke(scratchpad, config=config) if config is not None else llm.invoke(scratchpad)
-            raw_output = response.content if isinstance(response, AIMessage) else str(response)
+            raw_output = StrOutputParser().invoke(response) if isinstance(response, AIMessage) else str(response)
             try:
                 parsed = validate_structured_output(raw_output, schema)
                 return StructuredResponse(status="success", data=parsed)

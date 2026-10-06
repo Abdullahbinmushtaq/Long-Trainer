@@ -94,3 +94,15 @@ def test_chat_structured_path_persists_legacy_answer():
     assert sources == []
     storage.store_chat.assert_called_once_with(bot_id="bot", chat_id="chat", query="Question",
                                               answer=str(VALID), web_source=[], uploaded_files=None)
+
+
+def test_structured_content_blocks_ignore_non_text_metadata():
+    response = AIMessage(content=[
+        {"type": "text", "text": '{"answer":'},
+        {"type": "image_url", "image_url": {"url": "https://example.com/image.png"}},
+        {"type": "text", "text": '"Hello"}'},
+    ])
+    bot = make_bot([response])
+    result = bot.invoke_structured("Question", SCHEMA)
+    assert result["status"] == "success"
+    assert result["data"] == VALID
